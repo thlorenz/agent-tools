@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Reads ./01_prepare.md, replaces the below placeholders and pipes into `amp`
+
+# - link_to_pr with LINK env var
+# - reviewer_github_name with REVIEWER env var
+# - path_to_comments_file with OUTPUT env var
+
+## Example Usage (multiline):
+
+# LINK=somelink \
+# REVIEWER=someuser \
+# OUTPUT=comments.md \
+#   ./amp-pr0-01
+
+# 1. Check that all env vars are set
+
+if [ -z "$LINK" ] || [ -z "$REVIEWER" ] || [ -z "$OUTPUT" ]; then
+  echo "Error: Required environment variables LINK, REVIEWER, or OUTPUT are not set."
+  # print usage
+  echo "Usage: LINK=<link_to_pr> REVIEWER=<reviewer_github_name> OUTPUT=<path_to_comments_file> ./01_prepare.sh"
+  exit 1
+fi
+
+# 2. Run amp
+
+cat $DIR/01_prepare.md | \
+  sed "s|link_to_pr|$LINK|g" | \
+  sed "s|reviewer_github_name|$REVIEWER|g" | \
+  sed "s|path_to_comments_file|$OUTPUT|g" | \
+  amp
