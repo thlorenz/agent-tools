@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Reads ./02_separate.md, replaces the below placeholders and pipes into `amp`
+
+# - link_to_pr with LINK env var
+# - reviewer_github_name with REVIEWER env var
+# - path_to_comments_file with COMMENTS env var
+
+## Example Usage (multiline):
+
+# LINK=somelink \
+# REVIEWER=someuser \
+# COMMENTS=comments.md \
+#   ./amp-pr0-02
+
+# 1. Check that all env vars are set
+
+if [ -z "$LINK" ] || [ -z "$REVIEWER" ] || [ -z "$COMMENTS" ]; then
+  echo "Error: Required environment variables LINK, REVIEWER, or COMMENTS are not set."
+  # print usage
+  echo "Usage: LINK=<link_to_pr> REVIEWER=<reviewer_github_name> COMMENTS=<path_to_comments_file> ./01_prepare.sh"
+  exit 1
+fi
+
+# 2. Run amp
+COMMENTS_SEPARATED="${COMMENTS%.md}.separated.md"
+
+cat $DIR/02_separate.md | \
+  sed "s|link_to_pr|$LINK|g" | \
+  sed "s|reviewer_github_name|$REVIEWER|g" | \
+  sed "s|path_to_comments_file|$COMMENTS|g" | \
+  sed "s|path_to_comments_separated|$COMMENTS_SEPARATED|g" | \
+  amp
