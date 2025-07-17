@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Reads ./01_prepare.md, replaces the below placeholders and pipes into `amp`
+# Reads ./02_separate.md, replaces the below placeholders and pipes into `amp`
 
 # - link_to_pr with LINK env var
 # - reviewer_github_name with REVIEWER env var
@@ -13,7 +13,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # LINK=somelink \
 # REVIEWER=someuser \
 # COMMENTS=comments.md \
-#   ./amp-pr0-01
+#   ./amp-pr0-02
 
 # 1. Check that all env vars are set
 
@@ -25,9 +25,11 @@ if [ -z "$LINK" ] || [ -z "$REVIEWER" ] || [ -z "$COMMENTS" ]; then
 fi
 
 # 2. Run amp
+COMMENTS_SEPARATED="${COMMENTS%.md}.separated.md"
 
-cat $DIR/01_prepare.md | \
+cat $DIR/02_separate.md | \
   sed "s|link_to_pr|$LINK|g" | \
   sed "s|reviewer_github_name|$REVIEWER|g" | \
   sed "s|path_to_comments_file|$COMMENTS|g" | \
+  sed "s|path_to_comments_separated|$COMMENTS_SEPARATED|g" | \
   amp
