@@ -7,6 +7,7 @@ I want to collect the comments of one of the reviewers. Here are the details:
 
 - pull request link: link_to_pr
 - reviewer github name: reviewer_github_name
+- base: <base branch of commit>
 
 ### Task
 
@@ -19,7 +20,7 @@ Then start a Comments section.
 Do the following for each comment by this reviewer:
 
 1. Create a short title that summarizes the comment, no more than 6 words
-2. Provide the link to the comment below that
+2. Provide the link to the comment inside the pull request below that
 3. Add the full comment text below the title in comment style
 4. Provide the diff to which the comment refers, if available
 
@@ -30,12 +31,11 @@ Here is an example of a PR with one comment:
     ## PR 457 List of Comments by single Reviewer
 
     - reviewer: taco-paco
-    - [Link to PR](<link to pr>)
+    - [pr](<link to pull request>)
 
     ## 01: Title of the comment
 
-    [Link to comment]
-    (<link to comment>)
+    [Link](<link to comment>)
 
     > First line of comment text.
     > Second line of comment text.
@@ -49,14 +49,38 @@ Write the results to the following file:
 
 - path_to_comments_file
 
-#### Link Formatting
+#### Comment Links
 
-It is important to put the link itself on a new line so it is easy to see it fully in an
-editor.
+The link should be to the comment in the Conversation tab of the pull request. Don't try to
+link to the Files tab.
 
-#### Diff Formatting
+The below is an example of a correct link to a comment:
 
-Please format the diffs such that they appear properly inside a `diff` code block, including
+- https://github.com/magicblock-labs/magicblock-validator/pull/457#discussion_r2209647862
+
+This is linking to the same but in the files tab and thus is incorrect:
+
+- https://github.com/magicblock-labs/magicblock-validator/pull/457/files/f007d4fbcb3b65a81fc8c52c743b9e474b7fe180#discussion_r2209647862
+
+#### Diff
+
+Whenever there is a diff related to a comment you must provide it. Only leave it out for
+comments that are not referring to any code.
+
+In order to obtain the diff that the comment refers do the following:
+
+1. You already fetched the base branch on which this commit is based on, below we assume it is
+`dev`
+2. Use `git diff` to obtain the diff for the file which the comment refers to (example below)
+
+```sh
+git diff origin/dev..origin/thlorenz/committor-improve-table-speed magicblock-committor-service/src/commit/commit_using_buffer.rs`
+```
+
+Then extract the diff that matters, i.e. 3 lines above and below the change, and format it as
+follows.
+
+Format the diffs such that they appear properly inside a `diff` code block, including
 the relative file name above the diff and line numbers on first line of the diff itself.
 
 For instance this diff is correctly formatted:
@@ -70,18 +94,8 @@ magicblock-committor-service/src/commit/commit_using_buffer.rs
 -                                   CommitSignatures {
 ```
 
-This diff is not correctly formatted since it is missing line numbers and is not how the code
-is rendered on github:
-
-```diff
-- CommitStage::FailedUndelegate((
-- x.clone(),
-- CommitStrategy::args(use_lookup),
-- CommitSignatures {
-+ CommitStage::FailedUndelegate((x.clone(), CommitStrategy::args(use_lookup), CommitSignatures {
-```
-
 ### Notes
 
 You do not need to read any local files to accomplish this task.
-All needed information is provided in the PR and the comments.
+All needed information is provided in the PR and the comments and by obtaining diffs of the
+remote branches.
