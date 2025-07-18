@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+if [ -z "$1" ]; then
+  echo "Error: Base branch is not provided."
+  echo "Usage: ./amp-pr-create <base branch>"
+  exit 1
+fi
+BASE_BRANCH="$1"
+
+cat $DIR/pr-create.md | \
+  sed "s|_branch_|$BASE_BRANCH|g" | \
+  amp --interactive
