@@ -6,7 +6,7 @@ branch. Thus you can use `git diff` and `git log` in order to see which changes 
 ## Closed Issues
 
 Ask me for issues that this PR closes, I will provide them via comma separated numbers, or
-empty if there is none.
+`none` if there is none.
 
 You will add these issues as part of the PR summary section via the _CLOSES_ keyword.
 Example:
