@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+DIR="$(dirname "$(readlink -f "$0")")"
+
+if [ -z "$1" ]; then
+  echo "Error: Feature is not provided."
+  echo "Usage: ./amp-feat-remove <feature>"
+  exit 1
+fi
+FEATURE="$1"
+
+PLAN_FILE=/tmp/feat_$(echo "$FEATURE" | tr ' ' '-').md
+PLAN_FILE=$(echo "$PLAN_FILE" | tr '[:upper:]' '[:lower:]')
+
+cat $DIR/feat-remove.md | \
+  sed "s|_feature_|$FEATURE|g" | \
+  sed "s|_planfile_|$PLAN_FILE|g" | \
+  amp --interactive
