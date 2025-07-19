@@ -4,6 +4,21 @@ This repository contains a collection of tools that are used to interact with co
 
 Mainly, it includes prompts for specific use cases.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Pull Requests](#pull-requests)
+  - [Creating Pull Requests](#creating-pull-requests)
+  - [Responding to Pull Request Reviews](#responding-to-pull-request-reviews)
+    - [1. Set env vars in Shell](#1-set-env-vars-in-shell)
+    - [2. Run the prompt scripts](#2-run-the-prompt-scripts)
+- [Refactors](#refactors)
+  - [Feature Removal](#feature-removal)
+- [LICENSE](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ### Pull Requests
 
 #### Creating Pull Requests
