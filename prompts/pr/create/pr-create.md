@@ -27,6 +27,8 @@ The pull request body should have two sections:
 - Details: which provides more details on the changes, why they were made and how they work, it
   can have list items, sub sections and so on
 
+Leave an empty line between a section header and its content.
+
 Here is an example of a pull request message:
 
 ```markdown

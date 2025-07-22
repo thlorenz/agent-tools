@@ -1,6 +1,8 @@
 We want to remove the following feature: _feature_
 
-We will do this in multiple steps:
+_moredetails_
+
+We will remove the feature in multiple steps:
 
 ## 1. Plan
 

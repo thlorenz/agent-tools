@@ -4,15 +4,21 @@ DIR="$(dirname "$(readlink -f "$0")")"
 
 if [ -z "$1" ]; then
   echo "Error: Feature is not provided."
-  echo "Usage: ./amp-feat-remove <feature>"
+  echo "Usage: ./amp-feat-remove <feature> <optional-details-file>"
   exit 1
 fi
 FEATURE="$1"
+MORE_DETAILS=""
+
+if [ -n "$2" ]; then
+  MORE_DETAILS="I provided more details about this feature in this file: '$2'"
+fi
 
 PLAN_FILE=/tmp/feat_$(echo "$FEATURE" | tr ' ' '-').md
 PLAN_FILE=$(echo "$PLAN_FILE" | tr '[:upper:]' '[:lower:]')
 
 cat $DIR/feat-remove.md | \
   sed "s|_feature_|$FEATURE|g" | \
+  sed "s|_moredetails_|$MORE_DETAILS|g" | \
   sed "s|_planfile_|$PLAN_FILE|g" | \
   amp --interactive
