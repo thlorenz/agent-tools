@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+DIR="$(dirname "$(readlink -f "$0")")"
+
+if [ -z "$1" ]; then
+  echo "Error: Struct name is not provided."
+  echo "Usage: ./amp-struct-add-field <struct name> <field name> <field type>"
+  exit 1
+fi
+STRUCT_NAME="$1"
+
+if [ -z "$2" ]; then
+  echo "Error: Field name is not provided."
+  echo "Usage: ./amp-struct-add-field <struct name> <field name> <field type>"
+  exit 1
+fi
+
+FIELD_NAME="$2"
+
+if [ -z "$3" ]; then
+  echo "Error: Field type is not provided."
+  echo "Usage: ./amp-struct-add-field <struct name> <field name> <field type>"
+  exit 1
+fi
+
+FIELD_TYPE="$3"
+
+PLAN_FILE=/tmp/amp-struct-add-field-to-$(echo "$STRUCT_NAME" | tr ' ' '-')-plan.md
+PLAN_FILE=$(echo "$PLAN_FILE" | tr '[:upper:]' '[:lower:]')
+
+cat $DIR/struct-add-field.md | \
+  sed "s|_struct_name_|$STRUCT_NAME|g" | \
+  sed "s|_field_name_|$FIELD_NAME|g" | \
+  sed "s|_field_type_|$FIELD_TYPE|g" | \
+  sed "s|_planfile_|$PLAN_FILE|g" | \
+  amp
